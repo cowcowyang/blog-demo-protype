@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	
+	ext['thymeleaf.version'] = '3.0.3.RELEASE'
+	ext['thymeleaf-layout-dialect.version'] = '2.2.0'
+	ext['hibernate.version'] = '5.2.8.Final'
+	
+	repositories {
+			maven {
+			url 'http://maven.aliyun.com/nexus/content/groups/public/'
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.fyang.me'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+		maven {
+			url 'http://maven.aliyun.com/nexus/content/groups/public/'
+		}
+}
+
+
+dependencies {
+
+	compile('org.springframework.boot:spring-boot-starter-web')
+		// Thymeleaf
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
+	// Spring Data JPA
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	
+	// MySQL
+	compile('mysql:mysql-connector-java:6.0.5')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
