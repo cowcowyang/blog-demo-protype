@@ -18,6 +18,8 @@
 package com.fyang.me.blogdemo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.fyang.me.blogdemo.domain.User;
 
 /**
@@ -31,8 +33,10 @@ import com.fyang.me.blogdemo.domain.User;
  * @date: 2017年11月10日 下午4:49:11
  * 
  */
+
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByCode(String userCode);
+//	User findByUserName(String userName);
 
 }

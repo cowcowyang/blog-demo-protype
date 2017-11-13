@@ -41,7 +41,47 @@ public class Response<T> {
 
 	// 传输实体
 	private T data;
+	
 
+	/**
+	
+	 * @Title:Response
+	
+	 * @Description:TODO
+	
+	 * @param code
+	 * @param message
+	 * @param success
+	 * @param data
+	
+	 */
+	public Response(String code, String message, boolean success, T data) {
+		super();
+		this.code = code;
+		this.message = message;
+		this.success = success;
+		this.data = data;
+	}
+	
+
+	/**
+	
+	 * @Title:Response
+	
+	 * @Description:TODO
+	
+	 * @param code
+	 * @param message
+	 * @param success
+	
+	 */
+	public Response(String code, String message, boolean success) {
+		super();
+		this.code = code;
+		this.message = message;
+		this.success = success;
+	}
+	
 	public String getCode() {
 		return code;
 	}

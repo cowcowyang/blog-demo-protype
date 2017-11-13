@@ -1,6 +1,7 @@
 package com.fyang.me.blogdemo.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,6 +9,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 
@@ -20,6 +24,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @date: 2017年11月10日 下午3:30:25
  * 
  */
+
+@Entity
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -35,8 +41,8 @@ public class User extends BaseEntity {
 	private String userName;
 
 	@NotEmpty(message = "请输入密码")
-	@Size(max = 20)
-	@Column(length = 20)
+	@Size(max = 50)
+	@Column(length = 50)
 	private String password;
 
 	@NotEmpty(message = "请输入邮箱")
@@ -88,6 +94,11 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
+	public void setEncodedPassword(String password) {
+		Md5PasswordEncoder pwdEncoder = new Md5PasswordEncoder();
+		this.password = pwdEncoder.encodePassword(password,this.userName);
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -127,6 +138,36 @@ public class User extends BaseEntity {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	
+	
+
+	/**
+	
+	 * @Title:User
+	
+	 * @Description:TODO
+	
+	 * @param id
+	 * @param userName
+	 * @param password
+	 * @param email
+	 * @param nickName
+	 * @param avatar
+	 * @param userCode
+	 * @param userType
+	
+	 */
+	public User(String userName, String password, String email, String nickName, String avatar,
+			String userCode, String userType) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.userCode = userCode;
+		this.userType = userType;
+	}
 
 	@Override
 	public String toString() {
@@ -134,7 +175,5 @@ public class User extends BaseEntity {
 				+ ", nickName=" + nickName + ", avatar=" + avatar + ", userCode=" + userCode + ", userType=" + userType
 				+ "]";
 	};
-	
-	
 
 }

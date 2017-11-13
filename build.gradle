@@ -35,7 +35,7 @@ repositories {
 dependencies {
 
 	compile('org.springframework.boot:spring-boot-starter-web')
-		// Thymeleaf
+	// Thymeleaf
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 
 	// Spring Data JPA
@@ -45,6 +45,11 @@ dependencies {
 	compile('mysql:mysql-connector-java:6.0.5')
 	
 	compile('org.apache.commons:commons-lang3:3.5')
+	
+	// Spring Security
+	compile('org.springframework.boot:spring-boot-starter-security')
+	
+	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
