@@ -17,6 +17,9 @@
  */
 package com.fyang.me.blogdemo.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fyang.me.blogdemo.domain.User;
 
 /**
@@ -45,5 +48,20 @@ public interface UserService {
 	
 	 */
 	User saveUser(User user);
+	
+	/**
+	
+	 * @Title: queryUsersByUserName
+	
+	 * @Description: 根据用户名匹配
+	
+	 * @param userName
+	 * @param paging
+	 * @return
+	
+	 * @return: Page<User>
+	
+	 */
+	Page<User> queryUsersByUserName(String userName,Pageable paging);
 	
 }

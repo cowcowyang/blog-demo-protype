@@ -17,6 +17,8 @@
  */
 package com.fyang.me.blogdemo.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +39,6 @@ import com.fyang.me.blogdemo.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-//	User findByUserName(String userName);
+	Page<User> findByUserNameLike(String userName,Pageable paging);
 
 }

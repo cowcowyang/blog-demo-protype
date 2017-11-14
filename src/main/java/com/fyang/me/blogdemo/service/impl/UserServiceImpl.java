@@ -20,6 +20,8 @@ package com.fyang.me.blogdemo.service.impl;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fyang.me.blogdemo.domain.User;
@@ -65,6 +67,26 @@ public class UserServiceImpl implements UserService {
 	public User saveUser(User user) {
 		User save = userRepository.save(user);
 		return save;
+	}
+
+	/* (non Javadoc)
+	
+	 * @Title: queryUsersByUserName
+	
+	 * @Description: TODO
+	
+	 * @param userName
+	 * @param paging
+	 * @return
+	
+	 * @see com.fyang.me.blogdemo.service.UserService#queryUsersByUserName(java.lang.String, org.springframework.data.domain.Pageable)
+	
+	 */
+	@Override
+	public Page<User> queryUsersByUserName(String userName, Pageable paging) {
+		userName = "%" + userName + "%";
+		Page<User> users = userRepository.findByUserNameLike(userName, paging);
+		return users;
 	}
 
 }
