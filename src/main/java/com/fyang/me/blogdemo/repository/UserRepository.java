@@ -40,5 +40,7 @@ import com.fyang.me.blogdemo.domain.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	Page<User> findByUserNameLike(String userName,Pageable paging);
+	
+	User findById(Long id);
 
 }

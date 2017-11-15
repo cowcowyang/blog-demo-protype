@@ -41,7 +41,6 @@ public class Response<T> {
 
 	// 传输实体
 	private T data;
-	
 
 	/**
 	

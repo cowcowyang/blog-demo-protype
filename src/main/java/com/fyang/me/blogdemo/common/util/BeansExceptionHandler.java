@@ -15,7 +15,7 @@
  * @version: V1.0  
 
  */
-package com.fyang.me.blogdemo.common;
+package com.fyang.me.blogdemo.common.util;
 
 import java.util.ArrayList;
 import java.util.List;

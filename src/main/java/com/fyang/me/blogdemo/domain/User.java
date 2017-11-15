@@ -56,6 +56,26 @@ public class User extends BaseEntity {
 	@Column(nullable = true, length = 20)
 	private String nickName;
 
+	/**
+	
+	 * @Title:User
+	
+	 * @Description:TODO
+	
+	 * @param id
+	 * @param userName
+	 * @param password
+	 * @param email
+	
+	 */
+	public User(Long id, String userName, String password, String email) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+	}
+
 	// 用户头像
 	@Column(length = 200)
 	private String avatar;

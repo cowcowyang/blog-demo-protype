@@ -36,7 +36,7 @@ public class HomeController extends BaseController {
 	
 	@GetMapping("/")
 	public String root() {
-		return "redirect:/index";
+		return "redirect:/manage";
 	}
 
 	@GetMapping("/index")

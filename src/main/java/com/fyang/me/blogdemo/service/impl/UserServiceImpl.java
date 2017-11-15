@@ -19,6 +19,7 @@ package com.fyang.me.blogdemo.service.impl;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -87,6 +88,44 @@ public class UserServiceImpl implements UserService {
 		userName = "%" + userName + "%";
 		Page<User> users = userRepository.findByUserNameLike(userName, paging);
 		return users;
+	}
+
+	/* (non Javadoc)
+	
+	 * @Title: queryUserById
+	
+	 * @Description: TODO
+	
+	 * @param id
+	 * @return
+	
+	 * @see com.fyang.me.blogdemo.service.UserService#queryUserById(java.lang.String)
+	
+	 */
+	@Override
+	public User queryUserById(Long id) {
+		User user = null;
+		if(null != id) {
+			user = userRepository.findById(id);
+		}
+		return user;
+	}
+
+	/* (non Javadoc)
+	
+	 * @Title: removeUserById
+	
+	 * @Description: TODO
+	
+	 * @param id
+	
+	 * @see com.fyang.me.blogdemo.service.UserService#removeUserById(java.lang.Long)
+	
+	 */
+	@Transactional
+	@Override
+	public void removeUserById(Long id) {
+		userRepository.delete(id);
 	}
 
 }
