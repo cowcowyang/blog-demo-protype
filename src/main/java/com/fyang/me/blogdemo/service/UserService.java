@@ -90,5 +90,19 @@ public interface UserService {
 	
 	 */
 	void removeUserById(Long id);
+	
+	/**
+	
+	 * @Title: queryEntityByUserName
+	
+	 * @Description: 按照用户名查找用户
+	
+	 * @param userName
+	 * @return
+	
+	 * @return: User
+	
+	 */
+	User queryEntityByUserName(String userName);
 
 }

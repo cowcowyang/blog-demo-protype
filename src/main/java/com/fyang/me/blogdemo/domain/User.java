@@ -1,19 +1,31 @@
 package com.fyang.me.blogdemo.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * 
@@ -29,7 +41,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +70,6 @@ public class User extends BaseEntity {
 	@Size(min = 2, max = 20)
 	@Column(nullable = true, length = 20)
 	private String nickName;
-
 
 	/**
 	 * 
@@ -90,6 +101,11 @@ public class User extends BaseEntity {
 	// 用户类型
 	private String userType;
 
+	// 用户权限列表
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+	private List<Authority> authority;
+
 	protected User() {
 	}
 
@@ -118,8 +134,8 @@ public class User extends BaseEntity {
 	}
 
 	public void setEncodedPassword(String password) {
-		Md5PasswordEncoder pwdEncoder = new Md5PasswordEncoder();
-		this.password = pwdEncoder.encodePassword(password, this.userName);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		this.password = encoder.encode(encoder.encode(password));
 	}
 
 	public String getEmail() {
@@ -189,7 +205,7 @@ public class User extends BaseEntity {
 		this.userCode = userCode;
 		this.userType = userType;
 	}
-	
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -229,4 +245,47 @@ public class User extends BaseEntity {
 				+ ", updateDate=" + updateDate + ", updateUserCode=" + updateUserCode + ", avatar=" + avatar
 				+ ", userCode=" + userCode + ", userType=" + userType + "]";
 	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+		for (GrantedAuthority authority : this.authority) {
+			authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+		}
+		return authorities;
+	}
+
+	@Override
+	public String getUsername() {
+		return userName;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	public List<Authority> getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(List<Authority> authority) {
+		this.authority = authority;
+	}
+	
 }

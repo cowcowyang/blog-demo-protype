@@ -1,20 +1,3 @@
-/**  
-
- * @Title: UserServiceImpl.java
-
- * @Prject: blog-demo-protype
-
- * @Package: com.fyang.me.blogdemo.service.impl
-
- * @Description: TODO
-
- * @author: "fyang"  
-
- * @date: 2017年11月10日 下午4:03:35
-
- * @version: V1.0  
-
- */
 package com.fyang.me.blogdemo.service.impl;
 
 import javax.transaction.Transactional;
@@ -23,6 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fyang.me.blogdemo.domain.User;
@@ -42,7 +28,7 @@ import com.fyang.me.blogdemo.service.UserService;
  */
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -70,18 +56,23 @@ public class UserServiceImpl implements UserService {
 		return save;
 	}
 
-	/* (non Javadoc)
-	
+	/*
+	 * (non Javadoc)
+	 * 
 	 * @Title: queryUsersByUserName
-	
+	 * 
 	 * @Description: TODO
-	
+	 * 
 	 * @param userName
+	 * 
 	 * @param paging
+	 * 
 	 * @return
-	
-	 * @see com.fyang.me.blogdemo.service.UserService#queryUsersByUserName(java.lang.String, org.springframework.data.domain.Pageable)
-	
+	 * 
+	 * @see
+	 * com.fyang.me.blogdemo.service.UserService#queryUsersByUserName(java.lang.
+	 * String, org.springframework.data.domain.Pageable)
+	 * 
 	 */
 	@Override
 	public Page<User> queryUsersByUserName(String userName, Pageable paging) {
@@ -90,42 +81,89 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 
-	/* (non Javadoc)
-	
+	/*
+	 * (non Javadoc)
+	 * 
 	 * @Title: queryUserById
-	
+	 * 
 	 * @Description: TODO
-	
+	 * 
 	 * @param id
+	 * 
 	 * @return
-	
-	 * @see com.fyang.me.blogdemo.service.UserService#queryUserById(java.lang.String)
-	
+	 * 
+	 * @see
+	 * com.fyang.me.blogdemo.service.UserService#queryUserById(java.lang.String)
+	 * 
 	 */
 	@Override
 	public User queryUserById(Long id) {
 		User user = null;
-		if(null != id) {
+		if (null != id) {
 			user = userRepository.findById(id);
+		}
+		return user;
+	}
+
+	/*
+	 * (non Javadoc)
+	 * 
+	 * @Title: removeUserById
+	 * 
+	 * @Description: TODO
+	 * 
+	 * @param id
+	 * 
+	 * @see com.fyang.me.blogdemo.service.UserService#removeUserById(java.lang.Long)
+	 * 
+	 */
+	@Transactional
+	@Override
+	public void removeUserById(Long id) {
+		userRepository.delete(id);
+	}
+
+	/*
+	 * (non Javadoc)
+	 * 
+	 * @Title: queryEntityByUserName
+	 * 
+	 * @Description: TODO
+	 * 
+	 * @param userName
+	 * 
+	 * @return
+	 * 
+	 * @see
+	 * com.fyang.me.blogdemo.service.UserService#queryEntityByUserName(java.lang.
+	 * String)
+	 * 
+	 */
+	@Override
+	public User queryEntityByUserName(String userName) {
+		User user = null;
+		if (StringUtils.isNotEmpty(userName)) {
+			user = userRepository.findByUserName(userName);
 		}
 		return user;
 	}
 
 	/* (non Javadoc)
 	
-	 * @Title: removeUserById
+	 * @Title: loadUserByUsername
 	
 	 * @Description: TODO
 	
-	 * @param id
+	 * @param username
+	 * @return
+	 * @throws UsernameNotFoundException
 	
-	 * @see com.fyang.me.blogdemo.service.UserService#removeUserById(java.lang.Long)
+	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
 	
 	 */
-	@Transactional
 	@Override
-	public void removeUserById(Long id) {
-		userRepository.delete(id);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return this.queryEntityByUserName(username);
 	}
 
 }

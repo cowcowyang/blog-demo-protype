@@ -24,7 +24,7 @@
 					<th data-field="userName">用户名</th>
 					<th data-field="nickName">姓名</th>
 					<th data-field="email">邮箱</th>
-					<!-- <th data-field="authorities">角色</th> -->
+					<th data-field="authorities">角色</th>
 					<th data-field="createDate">注册时间</th>
 					<th data-field="operation">操作</th>
 
@@ -38,7 +38,7 @@
 					<td th:text="${user.nickName}"></td>
 					<td th:text="${user.email}"></td>
 					<td th:text="${#dates.format(user.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-					<!-- 	<td th:text="${user.authorities}">waylau</td> -->
+					<td th:text="${user.authorities}"></td>
 					<td>
 						<div>
 							<a class="blog-edit-user" data-toggle="modal"

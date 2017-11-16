@@ -17,6 +17,7 @@
  */
 package com.fyang.me.blogdemo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -37,7 +38,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fyang.me.blogdemo.common.enums.ResponseEnum;
 import com.fyang.me.blogdemo.common.util.BeansExceptionHandler;
+import com.fyang.me.blogdemo.domain.Authority;
 import com.fyang.me.blogdemo.domain.User;
+import com.fyang.me.blogdemo.service.AuthorityService;
 import com.fyang.me.blogdemo.service.UserService;
 import com.fyang.me.blogdemo.vo.Response;
 
@@ -59,12 +62,15 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AuthorityService authService;
 
 	/**
 	 * 
 	 * @Title: signUp
 	 * 
-	 * @Description: 用户注册
+	 * @Description: 创建用户
 	 * 
 	 * @param user
 	 * @return
@@ -73,7 +79,14 @@ public class UserController extends BaseController {
 	 * 
 	 */
 	@PostMapping
-	public ResponseEntity<Response<User>> signUp(User user) {
+	public ResponseEntity<Response<User>> createUser(User user, Long authorityId) {
+		
+		// 添加权限信息
+		List<Authority> authorities = new ArrayList<>();
+		Authority authority = authService.getAuthrotyById(authorityId);
+		authorities.add(authority);
+		user.setAuthority(authorities);
+		
 		User saveUser = null;
 		try {
 			user.setEncodedPassword(user.getPassword());
@@ -143,17 +156,17 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	
+	 * 
 	 * @Title: removeUser
-	
+	 * 
 	 * @Description: 根据Id删除用户信息
-	
+	 * 
 	 * @param id
 	 * @param model
 	 * @return
-	
+	 * 
 	 * @return: ResponseEntity<Response>
-	
+	 * 
 	 */
 	@DeleteMapping("{id}")
 	public ResponseEntity<Response> removeUser(@PathVariable Long id, Model model) {

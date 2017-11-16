@@ -24,9 +24,9 @@ public class BlogDemoApplicationTests {
 	public void contextLoads() {
 	}
 
-	@Test
+/*	@Test
 	public void test() {
-		UserController.signUp(new User("test01", "123456", "test@sd.com", "01", "dsad/dsda.jpg", "kdsh283129", "000"));
+		UserController.createUser(new User("test01", "123456", "test@sd.com", "01", "dsad/dsda.jpg", "kdsh283129", "000"));
 	}
-
+*/
 }
