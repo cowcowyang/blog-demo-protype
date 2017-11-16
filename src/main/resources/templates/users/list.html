@@ -2,8 +2,9 @@
 
 	<div class="input-group col-md-7 col-xl-6">
 
-		<input type="text" class="form-control" name="userName" id="searchName"
-			placeholder="输入用户名称进行搜索"> <span class="input-group-btn">
+		<input type="text" class="form-control" name="userName"
+			id="searchName" placeholder="输入用户名称进行搜索"> <span
+			class="input-group-btn">
 			<button class="btn btn-secondary" type="button" id="searchNameBtn">
 				<i class="fa fa-search" aria-hidden="true"></i>
 			</button>
@@ -24,6 +25,7 @@
 					<th data-field="nickName">姓名</th>
 					<th data-field="email">邮箱</th>
 					<!-- <th data-field="authorities">角色</th> -->
+					<th data-field="createDate">注册时间</th>
 					<th data-field="operation">操作</th>
 
 				</tr>
@@ -31,11 +33,12 @@
 			<tbody>
 
 				<tr th:each="user : ${usersModel.userList}">
-					<td th:text="${user.id}">1</td>
-					<td th:text="${user.userName}">1</td>
-					<td th:text="${user.nickName}">waylau</td>
-					<td th:text="${user.email}">waylau</td>
-				<!-- 	<td th:text="${user.authorities}">waylau</td> -->
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.userName}"></td>
+					<td th:text="${user.nickName}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${#dates.format(user.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					<!-- 	<td th:text="${user.authorities}">waylau</td> -->
 					<td>
 						<div>
 							<a class="blog-edit-user" data-toggle="modal"
@@ -53,7 +56,7 @@
 			</tbody>
 
 		</table>
-		<!-- <div th:replace="~{fragments/page :: page}">...</div> -->
+		<div th:replace="~{fragments/page :: page}">...</div>
 
 	</div>
 </div>

@@ -1,7 +1,10 @@
 package com.fyang.me.blogdemo.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,9 +12,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 
@@ -26,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -56,17 +59,18 @@ public class User extends BaseEntity {
 	@Column(nullable = true, length = 20)
 	private String nickName;
 
+
 	/**
-	
+	 * 
 	 * @Title:User
-	
+	 * 
 	 * @Description:TODO
-	
+	 * 
 	 * @param id
 	 * @param userName
 	 * @param password
 	 * @param email
-	
+	 * 
 	 */
 	public User(Long id, String userName, String password, String email) {
 		super();
@@ -87,7 +91,6 @@ public class User extends BaseEntity {
 	private String userType;
 
 	protected User() {
-
 	}
 
 	public Long getId() {
@@ -116,7 +119,7 @@ public class User extends BaseEntity {
 
 	public void setEncodedPassword(String password) {
 		Md5PasswordEncoder pwdEncoder = new Md5PasswordEncoder();
-		this.password = pwdEncoder.encodePassword(password,this.userName);
+		this.password = pwdEncoder.encodePassword(password, this.userName);
 	}
 
 	public String getEmail() {
@@ -158,15 +161,13 @@ public class User extends BaseEntity {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	
-	
 
 	/**
-	
+	 * 
 	 * @Title:User
-	
+	 * 
 	 * @Description:TODO
-	
+	 * 
 	 * @param id
 	 * @param userName
 	 * @param password
@@ -175,10 +176,10 @@ public class User extends BaseEntity {
 	 * @param avatar
 	 * @param userCode
 	 * @param userType
-	
+	 * 
 	 */
-	public User(String userName, String password, String email, String nickName, String avatar,
-			String userCode, String userType) {
+	public User(String userName, String password, String email, String nickName, String avatar, String userCode,
+			String userType) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -188,12 +189,44 @@ public class User extends BaseEntity {
 		this.userCode = userCode;
 		this.userType = userType;
 	}
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getCreateUserCode() {
+		return createUserCode;
+	}
+
+	public void setCreateUserCode(String createUserCode) {
+		this.createUserCode = createUserCode;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getUpdateUserCode() {
+		return updateUserCode;
+	}
+
+	public void setUpdateUserCode(String updateUserCode) {
+		this.updateUserCode = updateUserCode;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email
-				+ ", nickName=" + nickName + ", avatar=" + avatar + ", userCode=" + userCode + ", userType=" + userType
-				+ "]";
-	};
-
+				+ ", nickName=" + nickName + ", createDate=" + createDate + ", createUserCode=" + createUserCode
+				+ ", updateDate=" + updateDate + ", updateUserCode=" + updateUserCode + ", avatar=" + avatar
+				+ ", userCode=" + userCode + ", userType=" + userType + "]";
+	}
 }

@@ -110,7 +110,7 @@ public class UserController extends BaseController {
 		Page<User> pagingData = userService.queryUsersByUserName(userName, pageRequest);
 		List<User> userList = pagingData.getContent();
 
-		model.addAttribute("paging", pagingData);
+		model.addAttribute("page", pagingData);
 		model.addAttribute("userList", userList);
 
 		return new ModelAndView(async == true ? "users/list :: #userList" : "users/list", "usersModel", model);
