@@ -30,7 +30,7 @@ package com.fyang.me.blogdemo.common.enums;
  */
 public enum ResponseEnum {
 
-	Success("000", "success"), False("999", "false");
+	Success("000", "success"), Fail("999", "false");
 
 	private String code;
 	private String msg;
@@ -64,6 +64,10 @@ public enum ResponseEnum {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public boolean isSuccess() {
+		return Success.getCode().equals(this.code);
 	}
 
 	public static ResponseEnum get(String code) {

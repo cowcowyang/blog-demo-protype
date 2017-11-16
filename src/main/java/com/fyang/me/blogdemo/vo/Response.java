@@ -17,6 +17,8 @@
  */
 package com.fyang.me.blogdemo.vo;
 
+import com.fyang.me.blogdemo.common.enums.ResponseEnum;
+
 /**
  * 
  * @ClassName: Response
@@ -42,17 +44,20 @@ public class Response<T> {
 	// 传输实体
 	private T data;
 
+	// 返回枚举
+	private ResponseEnum response;
+
 	/**
-	
+	 * 
 	 * @Title:Response
-	
+	 * 
 	 * @Description:TODO
-	
+	 * 
 	 * @param code
 	 * @param message
 	 * @param success
 	 * @param data
-	
+	 * 
 	 */
 	public Response(String code, String message, boolean success, T data) {
 		super();
@@ -61,18 +66,17 @@ public class Response<T> {
 		this.success = success;
 		this.data = data;
 	}
-	
 
 	/**
-	
+	 * 
 	 * @Title:Response
-	
+	 * 
 	 * @Description:TODO
-	
+	 * 
 	 * @param code
 	 * @param message
 	 * @param success
-	
+	 * 
 	 */
 	public Response(String code, String message, boolean success) {
 		super();
@@ -81,6 +85,23 @@ public class Response<T> {
 		this.success = success;
 	}
 	
+	/**
+	
+	 * @Title:Response
+	
+	 * @Description:TODO
+	
+	 * @param success
+	 * @param response
+	
+	 */
+	public Response(ResponseEnum response) {
+		super();
+		this.success = response.isSuccess();
+		this.message = response.getMsg();
+		this.code = response.getCode();
+	}
+
 	public String getCode() {
 		return code;
 	}
@@ -98,13 +119,13 @@ public class Response<T> {
 	}
 
 	/**
-	
+	 * 
 	 * @Title: isSuccess
-	
+	 * 
 	 * @Description: 返回调用是否成功
-	
+	 * 
 	 * @return: boolean
-	
+	 * 
 	 */
 	public boolean isSuccess() {
 		return success;
@@ -121,5 +142,13 @@ public class Response<T> {
 	public void setData(T data) {
 		this.data = data;
 	}
-	
+
+	public ResponseEnum getResponse() {
+		return response;
+	}
+
+	public void setResponse(ResponseEnum response) {
+		this.response = response;
+	}
+
 }

@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fyang.me.blogdemo.common.enums.ResponseEnum;
 import com.fyang.me.blogdemo.common.util.BeansExceptionHandler;
 import com.fyang.me.blogdemo.domain.User;
 import com.fyang.me.blogdemo.service.UserService;
@@ -80,7 +81,7 @@ public class UserController extends BaseController {
 		} catch (ConstraintViolationException e) {
 			return ResponseEntity.ok().body(new Response<User>("998", BeansExceptionHandler.getErrorMessage(e), false));
 		}
-		return ResponseEntity.ok().body(new Response<User>("000", "处理成功", true, saveUser));
+		return ResponseEntity.ok().body(new Response<User>(ResponseEnum.Success));
 	}
 
 	/**
@@ -159,9 +160,9 @@ public class UserController extends BaseController {
 		try {
 			userService.removeUserById(id);
 		} catch (Exception e) {
-			return ResponseEntity.ok().body(new Response<>("999", e.getMessage(), false));
+			return ResponseEntity.ok().body(new Response<>(ResponseEnum.Fail));
 		}
-		return ResponseEntity.ok().body(new Response<>("000", "删除成功", true));
+		return ResponseEntity.ok().body(new Response<>(ResponseEnum.Success));
 	}
 
 }
