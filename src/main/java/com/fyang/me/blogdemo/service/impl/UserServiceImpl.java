@@ -162,8 +162,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return this.queryEntityByUserName(username);
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		return this.queryEntityByUserName(userName);
 	}
-
 }

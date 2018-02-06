@@ -28,15 +28,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * 
+ *
  * @ClassName: User
- * 
+ *
  * @Description: 用户类
- * 
+ *
  * @author: "fyang"
- * 
+ *
  * @date: 2017年11月10日 下午3:30:25
- * 
+ *
  */
 
 @Entity
@@ -56,8 +56,8 @@ public class User extends BaseEntity implements UserDetails {
 	private String userName;
 
 	@NotEmpty(message = "请输入密码")
-	@Size(max = 50)
-	@Column(length = 50)
+	@Size(max = 100)
+	@Column(nullable = false,length = 100)
 	private String password;
 
 	@NotEmpty(message = "请输入邮箱")
@@ -135,7 +135,7 @@ public class User extends BaseEntity implements UserDetails {
 
 	public void setEncodedPassword(String password) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		this.password = encoder.encode(encoder.encode(password));
+		this.password = encoder.encode(password);
 	}
 
 	public String getEmail() {
@@ -184,7 +184,6 @@ public class User extends BaseEntity implements UserDetails {
 	 * 
 	 * @Description:TODO
 	 * 
-	 * @param id
 	 * @param userName
 	 * @param password
 	 * @param email

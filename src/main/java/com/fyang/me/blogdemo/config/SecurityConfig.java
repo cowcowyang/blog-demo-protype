@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
 				.antMatchers("/manage/**").hasRole("ADMIN")
 				.and()
-				.formLogin()
+				.formLogin().usernameParameter("userName").passwordParameter("password")
 				.loginPage("/login").failureUrl("/login-error")
 				.and().rememberMe().key(BlogConstants.SECURITY_KEY)
 				.and().exceptionHandling().accessDeniedPage("/403");

@@ -4,12 +4,23 @@
  * @since: 1.0.0
  * @author Way Lau <https://waylau.com>
  */
+
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+    font-family: Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
+body {font-size:85%;}
+h1 {font-size:3.75em;}
+h2 {font-size:1.75em;}
+p {font-size:0.875em;}
+
 /* Footer */
 .blog-footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
+    height: 45px;
+    line-height: 45px; /* Vertically center the text there */
 }
 
 /* Index content*/
@@ -51,39 +62,38 @@
 }
 
 .blog-label-success {
-	color: #5cb85c;
+    color: #5cb85c;
 }
-  
+
 .blog-label-error {
-	color: #d9534f;
+    color: #d9534f;
 }
 
 /* blog avatar */
 .blog-avatar-img {
-  max-width: 100%; 
+    max-width: 100%;
 }
-
 
 /* go to top */
-#goToTop{
-  display:block;
-  width:40px;
-  height:40px;
-  position:fixed;
-  bottom:60px;
-  right:10px;
-  text-decoration:none;
+#goToTop {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+    text-decoration: none;
 }
 
-#goToTop span{
-  display:block;
-  color:#dddddd;
+#goToTop span {
+    display: block;
+    color: #dddddd;
 }
 
-#goToTop span:hover{
-  color:#cccccc;
+#goToTop span:hover {
+    color: #cccccc;
 }
 
 #md {
-	height:400px;	
+    height: 400px;
 }

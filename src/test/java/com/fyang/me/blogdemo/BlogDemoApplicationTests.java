@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fyang.me.blogdemo.controller.UserController;
@@ -14,19 +15,19 @@ import com.fyang.me.blogdemo.repository.UserRepository;
 @SpringBootTest
 public class BlogDemoApplicationTests {
 
-	@Autowired
-	UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-	@Autowired
-	UserController UserController;
+    @Autowired
+    UserController UserController;
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
-/*	@Test
-	public void test() {
-		UserController.createUser(new User("test01", "123456", "test@sd.com", "01", "dsad/dsda.jpg", "kdsh283129", "000"));
-	}
-*/
+    /*	@Test
+        public void test() {
+            UserController.createUser(new User("test01", "123456", "test@sd.com", "01", "dsad/dsda.jpg", "kdsh283129", "000"));
+        }
+    */
 }

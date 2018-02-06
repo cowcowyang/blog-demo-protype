@@ -2,7 +2,7 @@ buildscript {
 	ext {
 		springBootVersion = '1.5.8.RELEASE'
 	}
-	
+
 	ext['thymeleaf.version'] = '3.0.3.RELEASE'
 	ext['thymeleaf-layout-dialect.version'] = '2.2.0'
 	ext['hibernate.version'] = '5.2.8.Final'
@@ -31,10 +31,20 @@ repositories {
 		}
 }
 
+configurations {
+	all*.exclude module : 'spring-boot-starter-logging'
+}
 
 dependencies {
-
+	// spring-boot
 	compile('org.springframework.boot:spring-boot-starter-web')
+
+	// log4j2
+	compile('org.springframework.boot:spring-boot-starter-log4j2:1.5.2.RELEASE')
+
+	// jackson-dataformat-yaml
+	compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.0')
+
 	// Thymeleaf
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 
@@ -51,5 +61,12 @@ dependencies {
 	
 	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE')
 
+	compile('com.alibaba:fastjson:1.2.41')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	compile("org.springframework.boot:spring-boot-devtools")
+
+	// QiniuYun file server
+	compile('com.qiniu:qiniu-java-sdk:7.2.+')
 }
