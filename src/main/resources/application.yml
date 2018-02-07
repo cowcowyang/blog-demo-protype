@@ -1,0 +1,28 @@
+server:
+  port: 8080
+debug: false
+
+# THYMELEAF 
+spring:
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+    mode: HTML5
+  # DataSource
+  datasource:
+    url: jdbc:mysql://101.132.155.239/blog_demo?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: dev
+    password: fyang666
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # JPA
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto : update
+
+
+
+
+
+
+ 
