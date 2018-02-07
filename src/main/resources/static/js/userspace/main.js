@@ -49,21 +49,24 @@ $(function() {
 	    var formData = new FormData();
 	    var base64Codes = $(".cropImg > img").attr("src");
  	    formData.append("file",convertBase64UrlToBlob(base64Codes));
+
+        // 获取 CSRF Token
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 	    
  	    $.ajax({
-		    url: 'http://localhost:8081/upload',
+		    url: 'http://localhost:8080/u/upload',
 		    type: 'POST',
 		    cache: false,
 		    data: formData,
 		    processData: false,
 		    contentType: false,
+            beforeSend: function(request) {
+                request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token
+            },
 		    success: function(data){
+		    	var avatarUrl = data.data;
 		    	
-		    	var avatarUrl = data;
-		    	
-				// 获取 CSRF Token 
-				var csrfToken = $("meta[name='_csrf']").attr("content");
-				var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 		    	// 保存头像更改到数据库
 				$.ajax({ 
 					 url: avatarApi, 
@@ -76,7 +79,7 @@ $(function() {
 					 success: function(data){
 						 if (data.success) {
 							// 成功后，置换头像图片
-							 $(".blog-avatar").attr("src", data.avatarUrl);
+							 $(".blog-avatar").attr("src", data.data);
 						 } else {
 							 oastr.error("error!");
 						 }

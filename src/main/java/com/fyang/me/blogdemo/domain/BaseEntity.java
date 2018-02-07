@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.MappedSuperclass;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -38,5 +39,9 @@ public class BaseEntity implements Serializable{
 
 	// 更新人员
 	protected String updateUserCode;
-	
+
+	protected String toJsonString(){
+		return JSONObject.toJSONString(this);
+	}
+
 }

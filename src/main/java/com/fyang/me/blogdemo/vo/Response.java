@@ -91,7 +91,7 @@ public class Response<T> {
 	
 	 * @Description:TODO
 	
-	 * @param success
+	 * @param
 	 * @param response
 	
 	 */
@@ -100,6 +100,14 @@ public class Response<T> {
 		this.success = response.isSuccess();
 		this.message = response.getMsg();
 		this.code = response.getCode();
+	}
+
+	public Response(ResponseEnum response,T data) {
+		super();
+		this.success = response.isSuccess();
+		this.message = response.getMsg();
+		this.code = response.getCode();
+		this.data = data;
 	}
 
 	public String getCode() {

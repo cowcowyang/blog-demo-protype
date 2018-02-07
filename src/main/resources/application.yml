@@ -20,6 +20,13 @@ spring:
     hibernate:
       ddl-auto : update
 
+# Common Configuration
+file:
+  server:
+    ak: A3J-4a36m8zGgY1HdiiKTIaOtZD05Z8vCWAB5q_k
+    sk: AwKPOAeUEJM8of8ge4cl6KHQE7ds8N3EcnqzeoOe
+    bucket: devloper-bucket
+    host: http://p3sfq6r65.bkt.clouddn.com/
 
 
 
