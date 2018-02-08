@@ -2,6 +2,7 @@ package com.fyang.me.blogdemo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.fyang.me.blogdemo.common.enums.ResponseEnum;
+import com.fyang.me.blogdemo.common.util.UploadHandler;
 import com.fyang.me.blogdemo.domain.OSSBody;
 import com.fyang.me.blogdemo.domain.User;
 import com.fyang.me.blogdemo.service.UserService;
@@ -33,15 +34,6 @@ public class ProfileController {
 
     private static final Logger LOGGER = LogManager.getLogger(ProfileController.class);
 
-    @Value("${file.server.ak}")
-    private String accessKey;
-
-    @Value("${file.server.sk}")
-    private String secretKey;
-
-    @Value("${file.server.bucket}")
-    private String bucketName;
-
     @Value("${file.server.host}")
     private String host;
 
@@ -50,6 +42,9 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UploadHandler uploadHandler;
 
     @GetMapping("/{username}/profile")
     @PreAuthorize("authentication.name.equals(#username)")
@@ -61,14 +56,15 @@ public class ProfileController {
 
 
 
-    @PostMapping("/{username}/profile")
-    @PreAuthorize("authentication.name.equals(#username)")
-    public String saveProfile(@PathVariable("username") String username,User user) {
+    @PostMapping("/{userName}/profile")
+    @PreAuthorize("authentication.name.equals(#userName)")
+    public String saveProfile(@PathVariable("userName") String userName,User user) {
         User originalUser = userService.queryUserById(user.getId());
         originalUser.setEmail(user.getEmail());
         originalUser.setUserName(user.getUserName());
 
         // 判断密码是否做了变更
+/*
         String rawPassword = originalUser.getPassword();
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodePasswd = encoder.encode(user.getPassword());
@@ -76,9 +72,10 @@ public class ProfileController {
         if (!isMatch) {
             originalUser.setEncodedPassword(user.getPassword());
         }
+*/
 
         userService.saveUser(originalUser);
-        return "redirect:/u/" + username + "/profile";
+        return "redirect:/u/" + userName + "/profile";
     }
 
 
@@ -93,18 +90,11 @@ public class ProfileController {
     @RequestMapping("/upload")
     @ResponseBody
     public Response<String> uploadAvatar(@RequestParam("file")MultipartFile file){
-        String imgURL = StringUtils.EMPTY;
         Response<String> resp = new Response<>(ResponseEnum.Success);
 
         try {
             InputStream io = file.getInputStream();
-
-            Configuration config = new Configuration(Zone.zone0());
-            UploadManager uploadManager = new UploadManager(config);
-            String accessToken = Auth.create(accessKey, secretKey).uploadToken(bucketName);
-
-            com.qiniu.http.Response uploadResp = uploadManager.put(io,null,accessToken,null,null);
-            OSSBody oSSBody = JSON.parseObject(uploadResp.bodyString(), OSSBody.class);
+            OSSBody oSSBody = uploadHandler.upload(io);
             resp.setData(host + oSSBody.getKey());
         }catch(Exception e){
             resp.setResponse(ResponseEnum.Fail);
