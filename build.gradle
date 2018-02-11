@@ -69,4 +69,8 @@ dependencies {
 
 	// QiniuYun file server
 	compile('com.qiniu:qiniu-java-sdk:7.2.+')
+
+	// markdown 2 html
+	compile('es.nitaur.markdown:txtmark:0.16')
+
 }

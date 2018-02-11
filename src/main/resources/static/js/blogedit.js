@@ -18,8 +18,8 @@ $(function() {
         },
         resize:'vertical',
         localStorage:'md',
-        imgurl: 'http://localhost:8081',
-        base64url: 'http://localhost:8081'
+        imgurl: 'http://localhost:8080',
+        base64url: 'http://localhost:8080'
     });
   
     // 初始化标签控件
@@ -35,16 +35,24 @@ $(function() {
     $('.form-control-chosen').chosen();
  
  	$("#uploadImage").click(function() {
+
+        // 获取 CSRF Token
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
 		$.ajax({
-		    url: 'http://localhost:8081/upload',
+		    url: 'http://localhost:8080/u/upload',
 		    type: 'POST',
 		    cache: false,
 		    data: new FormData($('#uploadformid')[0]),
 		    processData: false,
 		    contentType: false,
+            beforeSend: function(request) {
+                request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token
+            },
 		    success: function(data){
 		    	var mdcontent=$("#md").val();
-		    	 $("#md").val(mdcontent + "\n![]("+data +") \n");
+		    	 $("#md").val(mdcontent + "\n![]("+data.data +") \n");
  
 	         }
 		}).done(function(res) {
