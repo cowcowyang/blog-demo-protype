@@ -46,10 +46,10 @@ public class ProfileController {
     @Autowired
     private UploadHandler uploadHandler;
 
-    @GetMapping("/{username}/profile")
-    @PreAuthorize("authentication.name.equals(#username)")
-    public ModelAndView profile(@PathVariable("username") String username, Model model) {
-        User user = (User)userDetailsService.loadUserByUsername(username);
+    @GetMapping("/{userName}/profile")
+    @PreAuthorize("authentication.name.equals(#userName)")
+    public ModelAndView profile(@PathVariable("userName") String userName, Model model) {
+        User user = (User)userDetailsService.loadUserByUsername(userName);
         model.addAttribute("user", user);
         return new ModelAndView("/userspace/profile", "userModel", model);
     }
@@ -73,7 +73,6 @@ public class ProfileController {
             originalUser.setEncodedPassword(user.getPassword());
         }
 */
-
         userService.saveUser(originalUser);
         return "redirect:/u/" + userName + "/profile";
     }
