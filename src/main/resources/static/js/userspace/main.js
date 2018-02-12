@@ -85,8 +85,8 @@ $(function() {
 						 }
 						 
 				     },
-				     error : function() {
-				    	 toastr.error("error!");
+				     error : function(data) {
+				    	 toastr.error(data.data);
 				     }
 				 });
 	        },

@@ -26,9 +26,9 @@
             <!-- Blog Post -->
             <div class="card mb-4">
                 <div class="card-block">
-                    <input  type="text" class="form-control" placeholder="请填写博客标题" value="" maxlength="50">
+                    <input  id="title" type="text" class="form-control" placeholder="请填写博客标题" value="" maxlength="50">
 
-                    <textarea class="blog-textarea" placeholder="请填写博客摘要" value="" maxlength="300"></textarea>
+                    <textarea id="summary" class="blog-textarea" placeholder="请填写博客摘要" value="" maxlength="300"></textarea>
 
                     <hr>
                     <textarea id="md" data-provide="markdown" data-hidden-buttons="cmdImage" ></textarea>
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="row mt-1">
-                            <div  class="col-lg-12">
+                            <div  class="col-lg-12" id="submitBlog" th:attr="userName=${#authentication.name}">
 								<button class="btn btn-primary float-right">发布</button>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
 <div th:replace="~{fragments/footer :: footer}">...</div>
  
 
-<script src="../../js/blogedit.js" th:src="@{/js/blogedit.js}"></script>
+<script src="../../js/blogs/blogedit.js" th:src="@{/js/blogs/blogedit.js}"></script>
  
 </body>
 </html>

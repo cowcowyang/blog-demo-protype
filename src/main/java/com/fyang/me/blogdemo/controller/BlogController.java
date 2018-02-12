@@ -30,7 +30,7 @@ public class BlogController extends BaseController{
         return new ModelAndView("/userspace/blogedit", "blogModel", model);
     }
 
-    @PostMapping("/{userName}/blogs/edit")
+    @PostMapping("/{userName}/edit")
     @PreAuthorize("authentication.name.equals(#userName)")
     public ResponseEntity<Response<String>> saveBlog(@PathVariable("userName") String userName, @RequestBody Blog blog) {
         Response<String> resp =  new Response<>(ResponseEnum.Success);
@@ -38,9 +38,11 @@ public class BlogController extends BaseController{
         blog.setUser(user);
         blogService.saveBlog(blog);
 
-        String redirectUrl = "/u/" + userName + "/blogs/" + blog.getId();
+        String redirectUrl = "/b/" + userName + "/" + blog.getId();
         resp.setData(redirectUrl);
         return ResponseEntity.ok().body(resp);
     }
+
+
 
 }

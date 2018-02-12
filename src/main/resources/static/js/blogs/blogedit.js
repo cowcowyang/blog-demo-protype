@@ -9,8 +9,12 @@
 
 // DOM 加载完再执行
 $(function() {
-	
-	// 初始化 md 编辑器
+
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+
+    // 初始化 md 编辑器
     $("#md").markdown({
         language: 'zh',
         fullscreen: {
@@ -36,10 +40,6 @@ $(function() {
  
  	$("#uploadImage").click(function() {
 
-        // 获取 CSRF Token
-        var csrfToken = $("meta[name='_csrf']").attr("content");
-        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-
 		$.ajax({
 		    url: 'http://localhost:8080/u/upload',
 		    type: 'POST',
@@ -59,5 +59,33 @@ $(function() {
 			$('#file').val('');
 		}).fail(function(res) {});
  	})
+
+    $("#submitBlog").click(function() {
+
+        $.ajax({
+            url: '/b/'+ $(this).attr("userName") + '/edit',
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify({"id":Number($('#id').val()),
+                "title": $('#title').val(),
+                "summary": $('#summary').val() ,
+                "content": $('#md').val()}),
+            beforeSend: function(request) {
+                request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token
+            },
+            success: function(data){
+                if (data.success) {
+                    // 成功后，重定向
+                    window.location = data.body;
+                } else {
+                    toastr.error(data.data);
+                }
+
+            },
+            error : function() {
+                toastr.error("error!");
+            }
+        })
+    })
  
 });

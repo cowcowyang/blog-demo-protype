@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
-  * @auther:fyang   
+  * @auther:fyang
   * @date: 2018/2/8
   * @description: QiniuYun OSS设置Bean
   *

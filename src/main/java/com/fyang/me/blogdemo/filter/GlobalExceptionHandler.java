@@ -1,6 +1,7 @@
 package com.fyang.me.blogdemo.filter;
 
 import com.fyang.me.blogdemo.common.enums.ResponseEnum;
+import com.fyang.me.blogdemo.common.util.BeansExceptionHandler;
 import com.fyang.me.blogdemo.vo.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +40,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Response<String>> entityViolationHandler(ConstraintViolationException e){
         Response<String> resp =  new Response<>(ResponseEnum.Fail);
-        resp.setData(e.getMessage());
+        resp.setData(BeansExceptionHandler.getErrorMessage(e));
         LOGGER.error("GlobalExceptionHandler.entityViolationHandler catch exception: {}",e.getMessage());
         return ResponseEntity.ok(resp);
     }
